@@ -1,18 +1,85 @@
 import tomJerryNibbles.*
 
-describe "Tests de Tom" {
+describe "Tom y Jerry - Historia completa" {
 
-  test "La velocidad maxima es 10" {
-    assert.equals(10, tom.velocidadMaxima() )
-  }
+    // --- Parte 1: Velocidad máxima ---
+    // Cada test repite el setup desde el inicio (los objetos se reinician entre tests)
 
-  test "La velocidad maxima si se come a Jerry es 15.2" {
-    tom.comer(jerry)
-    assert.equals(10, tom.velocidadMaxima())
-  }
+    test "Al inicio la velocidad maxima de Tom es 10" {
+        assert.equals(10, tom.velocidadMaxima())
+    }
 
-  test "test 4" {
-    assert.notThat(false)
-  }
+    test "Si Tom come a Jerry la velocidad maxima pasa a ser 15.2" {
+        tom.comer(jerry)
+        assert.equals(15.2, tom.velocidadMaxima())
+    }
+
+    test "Si Tom corre 24 metros la velocidad maxima pasa a ser 14" {
+        tom.comer(jerry)
+        tom.correr(24)
+        assert.equals(14, tom.velocidadMaxima())
+    }
+
+    test "Si Tom come a Nibbles la velocidad maxima pasa a ser 18.7" {
+        tom.comer(jerry)
+        tom.correr(24)
+        tom.comer(nibbles)
+        assert.equals(18.7, tom.velocidadMaxima())
+    }
+
+    test "Si Jerry cumple anios y Tom lo vuelve a comer la velocidad pasa a ser 25.9" {
+        tom.comer(jerry)
+        tom.correr(24)
+        tom.comer(nibbles)
+        jerry.cumplirAnios()
+        tom.comer(jerry)
+        assert.equals(25.9, tom.velocidadMaxima())
+    }
+
+    test "Si Tom corre 38 metros la velocidad pasa a ser 24" {
+        tom.comer(jerry)
+        tom.correr(24)
+        tom.comer(nibbles)
+        jerry.cumplirAnios()
+        tom.comer(jerry)
+        tom.correr(38)
+        assert.equals(24, tom.velocidadMaxima())
+    }
+
+    // --- Parte 2: Poder cazar ---
+
+    test "Tom puede atrapar si la distancia es corta" {
+        assert.that(tom.puedeAtrapar(60))
+    }
+
+    test "Tom no puede atrapar si la distancia es muy larga" {
+        assert.notThat(tom.puedeAtrapar(120))
+    }
+
+    test "Cuando Tom atrapa a Nibbles a 10 metros la velocidad pasa a ser 14.2" {
+        tom.atrapar(nibbles, 10)
+        assert.equals(14.2, tom.velocidadMaxima())
+    }
+
+    test "Cuando Tom no puede atrapar no cambia su velocidad" {
+        const velocidadAntes = tom.velocidadMaxima()
+        tom.atrapar(jerry, 10000)
+        assert.equals(velocidadAntes, tom.velocidadMaxima())
+    }
+
+    // --- Parte 3: Nuevo raton (Speedy) ---
+
+    test "Speedy tiene peso 15" {
+        assert.equals(15, speedy.peso())
+    }
+
+    test "Tom puede comer a Speedy y la velocidad pasa a ser 12.7" {
+        tom.comer(speedy)
+        assert.equals(12.7, tom.velocidadMaxima())
+    }
+
+    test "Tom puede atrapar a Speedy si esta cerca" {
+        assert.that(tom.puedeAtrapar(20))
+    }
 
 }
