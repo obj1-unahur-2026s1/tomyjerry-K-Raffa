@@ -82,4 +82,7 @@ describe "Tom y Jerry - Historia completa" {
         assert.that(tom.puedeAtrapar(20))
     }
 
+  test "Tom puede cazar a Jerry a 1 metro"{
+    assert.that(tom.puedeAtrapar(1))
+  }
 }
